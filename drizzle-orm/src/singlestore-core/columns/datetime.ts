@@ -66,8 +66,9 @@ export class SingleStoreDateTime<T extends ColumnBaseConfig<'date', 'SingleStore
 		return `datetime`;
 	}
 
-	override mapToDriverValue(value: Date): unknown {
-		return value.toISOString().replace('T', ' ').replace('Z', '');
+	override mapToDriverValue(value: Date | string): unknown {
+		const date = typeof value === 'string' ? new Date(value) : value;
+		return date.toISOString().replace('T', ' ').replace('Z', '');
 	}
 
 	override mapFromDriverValue(value: string): Date {

@@ -53,8 +53,9 @@ export class SingleStoreTimestamp<T extends ColumnBaseConfig<'date', 'SingleStor
 		return new Date(value + '+0000');
 	}
 
-	override mapToDriverValue(value: Date): string {
-		return value.toISOString().slice(0, -1).replace('T', ' ');
+	override mapToDriverValue(value: Date | string): string {
+		const date = typeof value === 'string' ? new Date(value) : value;
+		return date.toISOString().slice(0, -1).replace('T', ' ');
 	}
 }
 
