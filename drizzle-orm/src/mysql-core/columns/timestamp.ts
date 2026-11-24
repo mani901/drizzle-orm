@@ -51,8 +51,9 @@ export class MySqlTimestamp<T extends ColumnBaseConfig<'date', 'MySqlTimestamp'>
 		return new Date(value + '+0000');
 	}
 
-	override mapToDriverValue(value: Date): string {
-		return value.toISOString().slice(0, -1).replace('T', ' ');
+	override mapToDriverValue(value: Date | string): string {
+		const date = typeof value === 'string' ? new Date(value) : value;
+		return date.toISOString().slice(0, -1).replace('T', ' ');
 	}
 }
 

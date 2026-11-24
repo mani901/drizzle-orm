@@ -53,8 +53,9 @@ export class MySqlDateTime<T extends ColumnBaseConfig<'date', 'MySqlDateTime'>> 
 		return `datetime${precision}`;
 	}
 
-	override mapToDriverValue(value: Date): unknown {
-		return value.toISOString().replace('T', ' ').replace('Z', '');
+	override mapToDriverValue(value: Date | string): unknown {
+		const date = typeof value === 'string' ? new Date(value) : value;
+		return date.toISOString().replace('T', ' ').replace('Z', '');
 	}
 
 	override mapFromDriverValue(value: string): Date {
